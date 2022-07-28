@@ -3,11 +3,10 @@ document.body.style.cssText =
   "\
   margin: 0;\
   font-family: Arial, Helvetica, sans-serif;\
-  display: grid;\
-  grid-template-areas: 'header' 'content' 'footer\
-  \
-  \
-  \
+  display: flex;\
+  flex-direction: column;\
+  justify-content: space-between;\
+  min-height: 100vh;\
   ";
 
 // Header
@@ -21,7 +20,6 @@ header.style.cssText =
   display: flex;\
   justify-content: space-between;\
   align-items: center;\
-  grid-area: header;\
 ";
 
 document.body.appendChild(header);
@@ -78,9 +76,11 @@ header.append(ul);
 // Start Main Content
 let mainDiv = document.createElement("div");
 
-mainDiv.style.cssText = "\
+mainDiv.style.cssText =
+  "\
   padding: 15px;\
   background-color: #ECECEC;\
+  flex: 1\
 ";
 
 // Input Field
@@ -108,7 +108,7 @@ myInput.onblur = function () {
 
 mainDiv.prepend(myInput);
 
-// Creation Button
+// Creation of the button
 let createButton = document.createElement("button");
 createButton.append("Create");
 
@@ -131,7 +131,6 @@ contentDiv.setAttribute("class", "content");
 
 contentDiv.style.cssText =
   "\
-  grid-area: content;\
   display: grid;\
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\
   gap: 20px;\
@@ -139,9 +138,21 @@ contentDiv.style.cssText =
 
 mainDiv.append(contentDiv);
 
-let i = 0;
+// create operation time span
+let timeSpan = document.createElement("span");
+timeSpan.style.cssText = "\
+  display: inline-block;\
+  margin-left: 20px;\
+  font-size: 14px;\
+  color: #151515;\
+";
+contentDiv.before(timeSpan);
+
+let i = 0, start, end;
 createButton.onclick = function () {
   if (myInput.value !== "") {
+    start = new Date(); // start of the creation operation
+
     if (i !== 0) {
       // remove products container
       contentDiv.remove();
@@ -152,7 +163,6 @@ createButton.onclick = function () {
 
       contentDiv.style.cssText =
         "\
-        grid-area: content;\
         display: grid;\
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));\
         gap: 20px;\
@@ -193,6 +203,11 @@ createButton.onclick = function () {
       span.append(spanText);
       productDiv.prepend(span);
     }
+
+    end = new Date(); // end of the creation operation
+
+    // update timeSpan contents
+    timeSpan.innerHTML = `Operation time: ${end - start}ms`;
   }
 };
 
@@ -202,7 +217,6 @@ footer.append("Copyright 2022");
 
 footer.style.cssText =
   "\
-  grid-area: footer;\
   padding: 20px;\
   color: white;\
   font-size: 19px;\
