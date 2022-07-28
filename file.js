@@ -213,7 +213,7 @@ createButton.onclick = function () {
 
 // Footer
 let footer = document.createElement("footer");
-footer.append("Copyright 2022");
+footer.append("Copyright \u00A9 2022. All rights reserved");
 
 footer.style.cssText =
   "\
