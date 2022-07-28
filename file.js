@@ -151,7 +151,8 @@ contentDiv.before(timeSpan);
 let i = 0, start, end;
 createButton.onclick = function () {
   if (myInput.value !== "") {
-    start = new Date(); // start of the creation operation
+    start = performance.now(); // start of the creation operation
+    // start = new Date(); // an alternative (same results)
 
     if (i !== 0) {
       // remove products container
@@ -204,10 +205,11 @@ createButton.onclick = function () {
       productDiv.prepend(span);
     }
 
-    end = new Date(); // end of the creation operation
+    end = performance.now(); // end of the creation operation
+    // end = new Date(); // an alternative (same result)
 
     // update timeSpan contents
-    timeSpan.innerHTML = `Operation time: ${end - start}ms`;
+    timeSpan.innerHTML = `Operation time: ${(end - start).toFixed(3)}ms`;
   }
 };
 
